@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="./node_modules/vue/dist/vue.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
-        body{
+
+        body {
             background-color: #f1f1f1;
         }
 
@@ -30,13 +31,15 @@
             vertical-align: middle;
             /*display: inline-block;*/
         }
+
         /*logo*/
-        .logo{
+        .logo {
             position: absolute;
-            left:-350px;
-            top:0;
+            left: -350px;
+            top: 0;
         }
-        .logo img{
+
+        .logo img {
             width: 100px;
         }
 
@@ -61,12 +64,21 @@
 
         .select a:first-child {
             color: #ea6f5a;
-            border-bottom-color:#ea6f5a ;
+            border-bottom-color: #ea6f5a;
         }
 
         .select span {
             margin: 0 10px;
         }
+
+        /*注册鼠标移入效果*/
+        .select .active {
+            border-bottom-color: #ea6f5a;
+        }
+
+        /*.select .normal {*/
+        /*border-bottom-color: #ffffff;*/
+        /*}*/
 
         /*输入账号密码*/
         .form {
@@ -122,17 +134,52 @@
             width: 100%;
             display: inline-block;
             margin: 20px 0;
-
+            position: relative;
         }
 
-        .remenber a {
+        .remenber > a {
             text-decoration: none;
             float: right;
             color: #999;
+        }
+
+        /*鼠标移入*/
+        .remenber .factive {
+            color: black;
+        }
+
+        .remenber ul {
+            background-color: #fff;
+            list-style: none;
+            width: 195px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 25px;
+        }
+
+        .remenber ul li {
+            padding: 10px 20px;
 
         }
 
-        #loginbtn {
+        .remenber .show {
+            display: inline-block;
+        }
+
+        .remenber ul li a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+        }
+        .remenber ul .lactive{
+            background-color: #f1f1f1;
+        }
+
+
+        /*登录*/
+        .loginbtn {
             cursor: pointer;
             outline: none;
             margin-bottom: 20px;
@@ -145,6 +192,20 @@
             padding: 9px 18px;
         }
 
+        .sactive {
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 20px;
+            width: 100%;
+            color: #ffffff;
+            border-radius: 25px;
+            border: none;
+            font-size: 18px;
+            padding: 9px 18px;
+            background-color: rgb(0, 127, 179);
+        }
+
+        /*社交账号登录*/
         .social {
             width: 250px;
             margin: 0 auto;
@@ -166,7 +227,6 @@
             width: 50px;
             height: 50px;
             background-color: #b5b5b5;
-            /*background-color: hsla(0,0%,71%,.2);*/
             border-radius: 50%;
             line-height: 50px;
             text-align: center;
@@ -194,26 +254,33 @@
         }
 
         .social a:nth-of-type(4) {
-            background-color: hsla(0,0%,71%,.2);
+            background-color: hsla(0, 0%, 71%, .2);
             color: #999;
 
         }
-        
+
+        .main .social .changs {
+            background-color: #00820f;
+            font-size: 18px;
+            color: #ffffff;
+        }
 
 
     </style>
 </head>
 <body>
-<div class="wrap">
+<div id="wrap" class="wrap">
     <div class="main">
         <!--简书logo-->
         <div class="logo">
-            <img src="img/logo-58fd04f6f0de908401aa561cda6a0688.png" />
+            <img src="img/logo-58fd04f6f0de908401aa561cda6a0688.png"/>
         </div>
         <div class="select">
             <a href="login.html">登录</a>
             <span>·</span>
-            <a href="register.html">注册</a>
+            <a v-on:mouseover="mousein" v-on:mouseout="mouseout"
+               v-bind:class="{ active: isActive}"
+               href="register.html">注册</a>
         </div>
         <div class="form">
             <img class="userimg" src="img/user.png"/>
@@ -222,10 +289,18 @@
             <input id="pw" type="password" placeholder="密码">
             <div class="remenber">
                 <input type="checkbox" id="rem"><label for="rem">记住我</label>
-                <a href="">登录遇到问题？</a>
+                <a v-on:click="forget" v-on:mouseover="fmousein" v-on:mouseout="fmouseout"
+                   v-bind:class="{ factive: isError}">登录遇到问题？</a>
+                <ul v-bind:class="{ show: isshow}">
+                    <li v-on:mouseover="lmousein" v-on:mouseout="lmouseout"
+                        v-bind:class="{ lactive: isSelect}"><a href="">用手机号重置密码</a></li>
+                    <li v-on:mouseover="lmousein1" v-on:mouseout="lmouseout1"
+                        v-bind:class="{ lactive: isSelect1}"><a href="">用邮箱重置密码</a></li>
+                </ul>
             </div>
 
-            <input id="loginbtn" type="submit" value="登录">
+            <input v-on:mouseover="smousein" v-on:mouseout="smouseout"
+                   v-bind:class="{ sactive: isOk, loginbtn: isDoit}" type="submit" value="登录">
         </div>
         <div class="social">
             <p>社交帐号登录</p>
@@ -238,14 +313,78 @@
             <a href="">
                 <img src="img/qq.png" alt="">
             </a>
-            <a href="">
-                其他
+            <a v-on:click="douban" v-bind:class="{ changs: iswell}">
+                {{message}}
             </a>
         </div>
     </div>
 </div>
 </body>
 <script>
+    var vm = new Vue({
+        el: '#wrap',
+        data: {
 
+            isActive: false,
+            isError: false,
+            isOk: false,
+            isDoit: true,
+            message: "其他",
+            iswell: false,
+            isshow: false,
+            i: 1,
+            isSelect:false,
+            isSelect1:false
+        },
+        methods: {
+            mousein: function () {
+                this.isActive = true
+            },
+            mouseout: function () {
+                this.isActive = false
+            },
+            fmousein: function () {
+                this.isError = true
+            },
+            fmouseout: function () {
+                this.isError = false
+            },
+            smousein: function () {
+                this.isOk = true
+                this.isDoit = false
+            },
+            smouseout: function () {
+                this.isOk = false
+                this.isDoit = true
+            },
+            douban: function () {
+                this.message = '豆'
+                this.iswell = true
+            },
+            forget: function () {
+                console.log(this.i)
+                if (this.i == 1) {
+                    this.isshow = true
+                    this.i--
+                } else {
+                    this.i++
+                    this.isshow = false
+                }
+            },
+            lmousein:function () {
+               this.isSelect = true
+            },
+            lmouseout:function () {
+                this.isSelect = false
+            },
+            lmousein1:function () {
+                this.isSelect1 = true
+            },
+            lmouseout1:function () {
+                this.isSelect1 = false
+            }
+
+        }
+    })
 </script>
 </html>
