@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f1f1f1;
+        }
+
+        .wrap {
+            width: 100%;
+            background-color: #f1f1f1;
+            padding: 60px 0;
+        }
+
+        .main {
+            position: relative;
+            width: 300px;
+            margin: 0 auto;
+            padding: 35px 50px 30px;
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+            vertical-align: middle;
+            /*display: inline-block;*/
+            text-align: center;
+        }
+
+        /*logo*/
+        .logo {
+            position: absolute;
+            left: -350px;
+            top: 0;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        h3{
+            text-align: center;
+            color: #333;
+            margin: 20px 0 50px;
+        }
+
+
+        /*输入账号密码*/
+        .form {
+
+            width: 100%;
+            position: relative;
+        }
+
+        #email, #test ,#pwnew,#pwnew1{
+            outline: none;
+            width: 82%;
+            height: 50px;
+            margin-bottom: 0;
+            padding: 0 12px 0 35px;
+            border: 1px solid #c8c8c8;
+            background-color: rgb(248, 248, 248);
+            vertical-align: middle;
+            font-size: 14px;
+        }
+        #email,#test,#pwnew{
+            border-bottom: none;
+        }
+
+        #pwnew1{
+            border-radius: 0 0 4px 4px;
+        }
+
+        #sendbtn{
+            position: absolute;
+            top: 60px;
+            right: 10px;
+            width: 100px;
+            height: 36px;
+            font-size: 13px;
+            color: #fff;
+            background-color:#3194d0;
+            border-radius: 20px;
+            border: none;
+            opacity: .5;
+        }
+
+        .form img{
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            left: 15px;
+        }
+        .emimg {
+
+            top: 18px;
+        }
+
+        .testimg{
+
+            top: 68px;
+        }
+        .pwimg {
+
+
+            top: 120px;
+        }
+        .pwimg1{
+            top: 170px;
+        }
+
+        #okbtn {
+
+            cursor: pointer;
+            outline: none;
+            margin: 20px 0 25px 0;
+            width: 100%;
+            color: #ffffff;
+            background-color: #3194d0;
+            border-radius: 25px;
+            border: none;
+            font-size: 18px;
+            padding: 9px 18px;
+        }
+        .backlogin{
+
+            text-decoration: none;
+            color: rgb(150, 150, 150);
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="main">
+        <!--简书logo-->
+        <div class="logo">
+            <img src="img/logo-58fd04f6f0de908401aa561cda6a0688.png"/></div>
+        <h3>用邮箱重置密码</h3>
+        <div class="form">
+            <img class="emimg" src="img/邮箱 .png"/>
+            <img class="testimg" src="img/验证.png"/>
+            <img class="pwimg" src="img/password.png"/>
+            <img class="pwimg1" src="img/password.png"/>
+
+            <input id="email" type="text" placeholder="请输入注册或绑定的邮箱">
+            <input id="test" type="text" placeholder="邮箱验证码">
+            <input id="sendbtn" type="button" value="发送验证码">
+            <input id="pwnew" type="text" placeholder="请输入新密码">
+            <input id="pwnew1" type="password" placeholder="请再输入一遍密码">
+
+            <input id="okbtn" type="submit" value="重置密码">
+        </div>
+        <a class="backlogin" href="login.html"> < 返回登录界面</a>
+    </div>
+</div>
+</body>
+</html>
